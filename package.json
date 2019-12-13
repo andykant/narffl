@@ -1,0 +1,15 @@
+{
+  "name": "@andykant/narffl",
+  "version": "0.0.1",
+  "description": "NarFFL analytics",
+  "repository": "https://github.com/andykant/narffl.git",
+  "author": "Andy Kant <andy@andykant.com>",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=13.3.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
