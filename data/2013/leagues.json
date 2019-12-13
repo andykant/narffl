@@ -1,0 +1,348 @@
+{
+    "season": 2013,
+    "host": "fleaflicker",
+    "leagues": {
+        "Premier": [
+            {
+                "name": "Envy West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124687?season=2013"
+            },
+            {
+                "name": "Envy East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124686?season=2013"
+            },
+            {
+                "name": "Envy North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124684?season=2013"
+            },
+            {
+                "name": "Envy South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124685?season=2013"
+            },
+            {
+                "name": "Bacon West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124679?season=2013"
+            },
+            {
+                "name": "Bacon East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124678?season=2013"
+            },
+            {
+                "name": "Bacon North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124676?season=2013"
+            },
+            {
+                "name": "Bacon South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124677?season=2013"
+            },
+            {
+                "name": "Narwhal West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124683?season=2013"
+            },
+            {
+                "name": "Narwhal East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124682?season=2013"
+            },
+            {
+                "name": "Narwhal North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124680?season=2013"
+            },
+            {
+                "name": "Narwhal South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124681?season=2013"
+            }
+        ],
+        "Majors": [
+            {
+                "name": "George Halas West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140929?season=2013"
+            },
+            {
+                "name": "George Halas East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140928?season=2013"
+            },
+            {
+                "name": "George Halas North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140926?season=2013"
+            },
+            {
+                "name": "George Halas South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140927?season=2013"
+            },
+            {
+                "name": "Bill Walsh West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140921?season=2013"
+            },
+            {
+                "name": "Bill Walsh East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140920?season=2013"
+            },
+            {
+                "name": "Bill Walsh North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140918?season=2013"
+            },
+            {
+                "name": "Bill Walsh South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140919?season=2013"
+            },
+            {
+                "name": "Paul Brown West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140937?season=2013"
+            },
+            {
+                "name": "Paul Brown East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140936?season=2013"
+            },
+            {
+                "name": "Paul Brown North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140934?season=2013"
+            },
+            {
+                "name": "Paul Brown South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140935?season=2013"
+            },
+            {
+                "name": "Don Shula West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140925?season=2013"
+            },
+            {
+                "name": "Don Shula East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140924?season=2013"
+            },
+            {
+                "name": "Don Shula North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140922?season=2013"
+            },
+            {
+                "name": "Don Shula South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140923?season=2013"
+            },
+            {
+                "name": "Chuck Noll West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140933?season=2013"
+            },
+            {
+                "name": "Chuck Noll East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140932?season=2013"
+            },
+            {
+                "name": "Chuck Noll North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140930?season=2013"
+            },
+            {
+                "name": "Chuck Noll South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140931?season=2013"
+            },
+            {
+                "name": "Vince Lombardi West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140917?season=2013"
+            },
+            {
+                "name": "Vince Lombardi East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140916?season=2013"
+            },
+            {
+                "name": "Vince Lombardi North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140914?season=2013"
+            },
+            {
+                "name": "Vince Lombardi South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140938?season=2013"
+            }
+        ],
+        "Minors": [
+            {
+                "name": "Jim Brown West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140946?season=2013"
+            },
+            {
+                "name": "Jim Brown East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140945?season=2013"
+            },
+            {
+                "name": "Jim Brown North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140943?season=2013"
+            },
+            {
+                "name": "Jim Brown South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140944?season=2013"
+            },
+            {
+                "name": "Dan Marino West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140982?season=2013"
+            },
+            {
+                "name": "Dan Marino East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140981?season=2013"
+            },
+            {
+                "name": "Dan Marino North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140979?season=2013"
+            },
+            {
+                "name": "Dan Marino South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140980?season=2013"
+            },
+            {
+                "name": "Lawrence Taylor West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140950?season=2013"
+            },
+            {
+                "name": "Lawrence Taylor East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140949?season=2013"
+            },
+            {
+                "name": "Lawrence Taylor North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140947?season=2013"
+            },
+            {
+                "name": "Lawrence Taylor South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140948?season=2013"
+            },
+            {
+                "name": "John Elway West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140978?season=2013"
+            },
+            {
+                "name": "John Elway East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140977?season=2013"
+            },
+            {
+                "name": "John Elway North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140975?season=2013"
+            },
+            {
+                "name": "John Elway South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140976?season=2013"
+            },
+            {
+                "name": "Walter Payton West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140958?season=2013"
+            },
+            {
+                "name": "Walter Payton East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140957?season=2013"
+            },
+            {
+                "name": "Walter Payton North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140955?season=2013"
+            },
+            {
+                "name": "Walter Payton South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140956?season=2013"
+            },
+            {
+                "name": "Johnny Unitas West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140962?season=2013"
+            },
+            {
+                "name": "Johnny Unitas East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140961?season=2013"
+            },
+            {
+                "name": "Johnny Unitas North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140959?season=2013"
+            },
+            {
+                "name": "Johnny Unitas South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140960?season=2013"
+            },
+            {
+                "name": "Emmitt Smith West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140986?season=2013"
+            },
+            {
+                "name": "Emmitt Smith East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140985?season=2013"
+            },
+            {
+                "name": "Emmitt Smith North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140983?season=2013"
+            },
+            {
+                "name": "Emmitt Smith South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140984?season=2013"
+            },
+            {
+                "name": "Dick Butkus West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140970?season=2013"
+            },
+            {
+                "name": "Dick Butkus East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140969?season=2013"
+            },
+            {
+                "name": "Dick Butkus North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140967?season=2013"
+            },
+            {
+                "name": "Dick Butkus South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140968?season=2013"
+            },
+            {
+                "name": "Barry Sanders West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140974?season=2013"
+            },
+            {
+                "name": "Barry Sanders East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140973?season=2013"
+            },
+            {
+                "name": "Barry Sanders North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140971?season=2013"
+            },
+            {
+                "name": "Barry Sanders South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140972?season=2013"
+            },
+            {
+                "name": "Reggie White West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140966?season=2013"
+            },
+            {
+                "name": "Reggie White East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140965?season=2013"
+            },
+            {
+                "name": "Reggie White North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140963?season=2013"
+            },
+            {
+                "name": "Reggie White South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140964?season=2013"
+            },
+            {
+                "name": "Jerry Rice West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140942?season=2013"
+            },
+            {
+                "name": "Jerry Rice East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140941?season=2013"
+            },
+            {
+                "name": "Jerry Rice North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140939?season=2013"
+            },
+            {
+                "name": "Jerry Rice South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140940?season=2013"
+            },
+            {
+                "name": "Joe Montana West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140954?season=2013"
+            },
+            {
+                "name": "Joe Montana East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140953?season=2013"
+            },
+            {
+                "name": "Joe Montana North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140951?season=2013"
+            },
+            {
+                "name": "Joe Montana South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/140952?season=2013"
+            }
+        ]
+    }
+}
