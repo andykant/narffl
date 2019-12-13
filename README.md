@@ -1,2 +1,3 @@
-# narffl
-NarFFL analytics
+# NarFFL Analytics
+
+- ELO ratings
