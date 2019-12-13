@@ -1,0 +1,20 @@
+# 2010
+
+## Leagues
+
+- Winner: [u/JehovahTheMouse](https://www.reddit.com/u/JehovahTheMouse) from Gold Division
+- Size: 48 teams
+- The [entire league](https://www76.myfantasyleague.com/2010/home/57801) was hosted on MyFantasyLeague, with Fleaflicker used for 12-team drafts ([example](https://www.fleaflicker.com/nfl/leagues/94920?season=2010)).
+
+## References
+
+### [r/fantasyfootball](https://www.reddit.com/r/fantasyfootball/)
+- [NarFFL: It's time to check in and confirm your place and discuss any changes we'd like to see for 2010](https://www.reddit.com/r/fantasyfootball/comments/cbile/narffl_its_time_to_check_in_and_confirm_your/)
+- [NarFFL: Tentative list of Owners, make sure you to speak up if you don't see your name on the list!](https://www.reddit.com/r/fantasyfootball/comments/clb9b/narffl_tentative_list_of_owners_make_sure_you_to/)
+- [NarFFL: A 24 team Super-League and how it's gonna work](https://www.reddit.com/r/fantasyfootball/comments/clf5m/narffl_a_24_team_superleague_and_how_its_gonna/)
+- [NarFFL: We're thinking about adding a 3rd 12 man conference to the mix. If you were left out, speak up!](https://www.reddit.com/r/fantasyfootball/comments/cpwok/narffl_were_thinking_about_adding_a_3rd_12_man/)
+
+### [r/NarFFL](https://www.reddit.com/r/NarFFL/)
+- [How would you like the league scored?](https://www.reddit.com/r/NarFFL/comments/cpyh1/how_would_you_like_the_league_scored/)
+- [NarFFL League Rules Page - When we settle something through a post, I'll update the league rules accordingly. Please let me know how you'd like it edited.](https://www.reddit.com/r/NarFFL/comments/cwgnq/narffl_league_rules_page_when_we_settle_something/)
+- [State of the NarFFL: 8/10/10](https://www.reddit.com/r/NarFFL/comments/czivc/state_of_the_narffl_81010/)
