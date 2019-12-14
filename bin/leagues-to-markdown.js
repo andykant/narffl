@@ -1,7 +1,11 @@
+#!/usr/bin/env node
 import {readFileSync, appendFileSync} from 'fs';
 import yargs from 'yargs';
 
+// Usage: `yarn leagues-to-markdown [season]`
 const season = yargs.parse()._[0];
+
+// Read the source JSON
 const json = JSON.parse(readFileSync(`./data/${season}/leagues.json`, 'utf-8'));
 
 // Convert to markdown links

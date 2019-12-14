@@ -10,9 +10,10 @@
         "node": ">=13.3.0"
     },
     "scripts": {
-        "leagues-to-markdown": "node bin/leagues-to-markdown.js"
+        "leagues-to-markdown": "node ./bin/leagues-to-markdown.js"
     },
     "dependencies": {
+        "cheerio": "^1.0.0-rc.3",
         "node-fetch": "^2.6.0"
     },
     "devDependencies": {

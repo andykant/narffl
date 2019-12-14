@@ -1,0 +1,56 @@
+{
+    "season": 2012,
+    "host": "fleaflicker",
+    "leagues": {
+        "Premier": [
+            {
+                "name": "Envy West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124687?season=2012"
+            },
+            {
+                "name": "Envy East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124686?season=2012"
+            },
+            {
+                "name": "Envy North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124684?season=2012"
+            },
+            {
+                "name": "Envy South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124685?season=2012"
+            },
+            {
+                "name": "Bacon West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124679?season=2012"
+            },
+            {
+                "name": "Bacon East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124678?season=2012"
+            },
+            {
+                "name": "Bacon North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124676?season=2012"
+            },
+            {
+                "name": "Bacon South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124677?season=2012"
+            },
+            {
+                "name": "Narwhal West",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124683?season=2012"
+            },
+            {
+                "name": "Narwhal East",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124682?season=2012"
+            },
+            {
+                "name": "Narwhal North",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124680?season=2012"
+            },
+            {
+                "name": "Narwhal South",
+                "url": "https://www.fleaflicker.com/nfl/leagues/124681?season=2012"
+            }
+        ]
+    }
+}
