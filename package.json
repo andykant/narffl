@@ -10,7 +10,8 @@
         "node": ">=13.3.0"
     },
     "scripts": {
-        "leagues-to-markdown": "node ./bin/leagues-to-markdown.js"
+        "leagues-to-markdown": "node ./bin/leagues-to-markdown.js",
+        "the-horn-live": "node ./bin/the-horn-live.js"
     },
     "dependencies": {
         "cheerio": "^1.0.0-rc.3",
