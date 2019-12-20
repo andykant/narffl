@@ -121,6 +121,10 @@ function updateTHPP(thpp) {
                 // Cache whether a team has lost.
                 awayTeam.thpp.lost = awayTeam.thpp.week16 - homeTeam.thpp.week16 < 0;
                 homeTeam.thpp.lost = homeTeam.thpp.week16 - awayTeam.thpp.week16 < 0;
+
+                // Re-compute THPP.
+                updateTHPP(awayTeam.thpp);
+                updateTHPP(homeTeam.thpp);
             })
         );
 
