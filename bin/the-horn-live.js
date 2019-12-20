@@ -97,6 +97,7 @@ function updateTHPP(thpp) {
                     game.awayScore.alreadyPlayed === undefined
                         ? 9 - (game.awayScore.yetToPlay || 0)
                         : 0;
+                awayTeam.thpp.final = awayTeam.thpp.alreadyPlayed === 9;
                 const homeTeam = teams.find(team => team.id === game.home.id);
                 homeTeam.thpp.week16 = game.homeScore.score.value || 0;
                 homeTeam.thpp.yetToPlay = game.homeScore.yetToPlay || 0;
@@ -106,17 +107,27 @@ function updateTHPP(thpp) {
                     game.homeScore.alreadyPlayed === undefined
                         ? 9 - (game.homeScore.yetToPlay || 0)
                         : 0;
+                homeTeam.thpp.final = homeTeam.thpp.alreadyPlayed === 9;
 
                 // Cache opponent status.
                 awayTeam.thpp.opponent16 = game.homeScore.score.value || 0;
+                homeTeam.thpp.opponentFinal = homeTeam.thpp.final;
                 homeTeam.thpp.opponent16 = game.awayScore.score.value || 0;
+                homeTeam.thpp.opponentFinal = awayTeam.thpp.final;
+
+                // Cache whether a team has lost.
+                awayTeam.thpp.lost = awayTeam.thpp.week16 - homeTeam.thpp.week16 < 0;
+                homeTeam.thpp.lost = homeTeam.thpp.week16 - awayTeam.thpp.week16 < 0;
             })
         );
 
         // Generate team summaries.
         console.log(`${Date.now()} Generating team summaries.`);
         const summaries = teams
+            // Sort by points.
             .sort((a, b) => b.thpp.total - a.thpp.total)
+            // Then sort by whether they lost already.
+            .sort((a, b) => a.thpp.lost - b.thpp.lost)
             .map((team, index) => {
                 // Generate emoji lineup
                 let yetToPlay = [];
@@ -134,13 +145,13 @@ function updateTHPP(thpp) {
                 const lineup = `${yetToPlay}${inPlay}${alreadyPlayed}`;
 
                 // Return summary.
-                return `${index + 1}|${team.name}|${
+                return `${index + 1}|${team.thpp.lost ? `~~${team.name}~~` : team.name}|${
                     team.league
                 }|${lineup}|**${team.thpp.total.toFixed(2)}**|${(2 * team.thpp.average).toFixed(
                     2
-                )}|${team.thpp.week15.toFixed(2)}|${team.thpp.week16.toFixed(
-                    2
-                )}|${team.thpp.opponent16.toFixed(2)}`;
+                )}|${team.thpp.week15.toFixed(2)}|${team.thpp.week16.toFixed(2)}${
+                    team.thpp.final ? 'F' : ''
+                }|${team.thpp.opponent16.toFixed(2)}${team.thpp.opponentFinal ? 'F' : ''}`;
             });
 
         // Update reddit post.
@@ -158,10 +169,12 @@ function updateTHPP(thpp) {
 This is an unofficial live computation of **The Horn Playoff Points**:  
 \`[.5 * (Regular Season Points Avg)] + (Week 15 Score) + (Week 16 Score) = Total Horn Playoff Points\`
 
+Hopefully this works correctly, as I wasn't able to test it against games in progress.
+
 _Updated every five minutes._  
 _Last updated: ${new Date().toTimeString()}_
 
-Rank|Team|League|Lineup|THPP|Average|Week 15|Week 16|Opponent
+Rank|Team|League|Lineup|THPP|Average|Week15|Week16|Opponent
 :--|:--|:--|:-:|:-:|:-:|:-:|:-:|:-:
 ${summaries.join('\r\n')}
         `);
@@ -169,5 +182,5 @@ ${summaries.join('\r\n')}
     }
 
     // Run cron job.
-    new CronJob('*/1 * * * *', updateRedditPost, null, true, null, null, true);
+    new CronJob('*/5 * * * *', updateRedditPost, null, true, null, null, true);
 })();
