@@ -48,8 +48,15 @@ function updateTHPP(thpp) {
         leagues.map(async ({id, name}) => {
             const scoreboard = await fetchScoreboard({id, week: 16});
             const game = scoreboard.games.find(game => game.isChampionshipGame);
+
+            // Append metadata.
             game.away.league = name;
+            game.away.teamUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/teams/${game.away.id}`;
             game.home.league = name;
+            game.home.teamUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/teams/${game.home.id}`;
+            game.away.leagueUrl = game.home.leagueUrl = `https://www.fleaflicker.com/nfl/leagues/${id}`;
+            game.away.scoreUrl = game.home.scoreUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/scores/${game.id}`;
+
             teams.push(game.away);
             teams.push(game.home);
         })
@@ -152,13 +159,15 @@ function updateTHPP(thpp) {
                 const lineup = `${yetToPlay}${inPlay}${alreadyPlayed}`;
 
                 // Return summary.
-                return `${index + 1}|${team.thpp.lost ? `~~${team.name}~~` : team.name}|${
-                    team.league
-                }|${lineup}|**${team.thpp.total.toFixed(2)}**|${(2 * team.thpp.average).toFixed(
-                    2
-                )}|${team.thpp.week15.toFixed(2)}|${team.thpp.week16.toFixed(2)}${
-                    team.thpp.final ? 'F' : ''
-                }|${team.thpp.opponent16.toFixed(2)}${team.thpp.opponentFinal ? 'F' : ''}`;
+                return `${index + 1}|**${team.thpp.total.toFixed(2)}**|[${
+                    team.thpp.lost ? `~~${team.name}~~` : team.name
+                }](${team.teamUrl})|[${team.league}](${team.leagueUrl})|${lineup}|${(
+                    2 * team.thpp.average
+                ).toFixed(2)}|${team.thpp.week15.toFixed(2)}|[${team.thpp.week16.toFixed(2)}${
+                    team.thpp.final ? '✅' : ''
+                }](${team.scoreUrl})|${team.thpp.opponent16.toFixed(2)}${
+                    team.thpp.opponentFinal ? '✅' : ''
+                }`;
             });
 
         // Compute last updated time.
@@ -187,7 +196,7 @@ Hopefully this works correctly, as I wasn't able to test it against games in pro
 _Updated every five minutes._  
 _Last updated: ${now}_
 
-Rank|Team|League|Lineup|THPP|Average|Week15|Week16|Opponent
+Rank|THPP|Team|League|Lineup|Average|Week15|Week16|Opponent
 :--|:--|:--|:-:|:-:|:-:|:-:|:-:|:-:
 ${summaries.join('\r\n')}
         `);
