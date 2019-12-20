@@ -4,7 +4,7 @@ This is a collection of historical NarFFL data, both a summary of its format/lea
 
 ## A Brief History
 
--   **2009** NarFFL created by StruggleBunny
+-   **2009**: NarFFL created by StruggleBunny  
     12 teams.
 -   **2010**: First expansion.  
     48 teams.

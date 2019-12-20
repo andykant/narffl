@@ -14,7 +14,10 @@
     },
     "dependencies": {
         "cheerio": "^1.0.0-rc.3",
-        "node-fetch": "^2.6.0"
+        "cron": "^1.7.2",
+        "dotenv-defaults": "^1.0.3",
+        "node-fetch": "^2.6.0",
+        "snoowrap": "^1.20.1"
     },
     "devDependencies": {
         "prettier": "^1.19.1",
