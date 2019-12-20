@@ -2,12 +2,15 @@ import {readFileSync} from 'fs';
 import fetch from 'node-fetch';
 import cron from 'cron';
 import snoowrap from 'snoowrap';
+import dateTZ from 'date-fns-tz';
 import dotenv from 'dotenv-defaults';
 dotenv.config();
 
 const {CronJob} = cron;
+const {zonedTimeToUtc, utcToZonedTime, format} = dateTZ;
 const {
     SEASON,
+    TIMEZONE,
     REDDIT_CLIENT_ID,
     REDDIT_CLIENT_SECRET,
     REDDIT_USERNAME,
@@ -154,6 +157,12 @@ function updateTHPP(thpp) {
                 }|${team.thpp.opponent16.toFixed(2)}${team.thpp.opponentFinal ? 'F' : ''}`;
             });
 
+        // Compute last updated time.
+        const utcNow = zonedTimeToUtc(new Date(), Intl.DateTimeFormat.timeZone);
+        const now = format(utcToZonedTime(utcNow, TIMEZONE), 'yyyy-MM-dd h:mmaaaaa (z)', {
+            timeZone: TIMEZONE,
+        });
+
         // Update reddit post.
         console.log(`${Date.now()} Updating reddit.`);
         const r = new snoowrap({
@@ -172,7 +181,7 @@ This is an unofficial live computation of **The Horn Playoff Points**:
 Hopefully this works correctly, as I wasn't able to test it against games in progress.
 
 _Updated every five minutes._  
-_Last updated: ${new Date().toTimeString()}_
+_Last updated: ${now}_
 
 Rank|Team|League|Lineup|THPP|Average|Week15|Week16|Opponent
 :--|:--|:--|:-:|:-:|:-:|:-:|:-:|:-:
