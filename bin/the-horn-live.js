@@ -105,7 +105,7 @@ function updateTHPP(thpp) {
                 awayTeam.thpp.inPlay = game.awayScore.inPlay || 0;
                 awayTeam.thpp.alreadyPlayed =
                     game.awayScore.alreadyPlayed === undefined
-                        ? 9 - (game.awayScore.yetToPlay || 0)
+                        ? 9 - (game.awayScore.yetToPlay || 0) - (game.awayScore.inPlay || 0)
                         : 0;
                 awayTeam.thpp.final = awayTeam.thpp.alreadyPlayed === 9;
                 const homeTeam = teams.find(team => team.id === game.home.id);
@@ -115,7 +115,7 @@ function updateTHPP(thpp) {
                 homeTeam.thpp.inPlay = game.homeScore.inPlay || 0;
                 homeTeam.thpp.alreadyPlayed =
                     game.homeScore.alreadyPlayed === undefined
-                        ? 9 - (game.homeScore.yetToPlay || 0)
+                        ? 9 - (game.homeScore.yetToPlay || 0) - (game.homeScore.inPlay || 0)
                         : 0;
                 homeTeam.thpp.final = homeTeam.thpp.alreadyPlayed === 9;
 
@@ -126,8 +126,14 @@ function updateTHPP(thpp) {
                 homeTeam.thpp.opponentFinal = awayTeam.thpp.final;
 
                 // Cache whether a team has lost.
-                awayTeam.thpp.lost = awayTeam.thpp.week16 - homeTeam.thpp.week16 < 0;
-                homeTeam.thpp.lost = homeTeam.thpp.week16 - awayTeam.thpp.week16 < 0;
+                awayTeam.thpp.lost =
+                    homeTeam.thpp.final &&
+                    awayTeam.thpp.final &&
+                    awayTeam.thpp.week16 - homeTeam.thpp.week16 < 0;
+                homeTeam.thpp.lost =
+                    homeTeam.thpp.final &&
+                    awayTeam.thpp.final &&
+                    homeTeam.thpp.week16 - awayTeam.thpp.week16 < 0;
 
                 // Re-compute THPP.
                 updateTHPP(awayTeam.thpp);
@@ -156,7 +162,7 @@ function updateTHPP(thpp) {
                 alreadyPlayed.length = team.thpp.alreadyPlayed || 0;
                 alreadyPlayed.fill('✅');
                 alreadyPlayed = alreadyPlayed.join('');
-                const lineup = `${yetToPlay}${inPlay}${alreadyPlayed}`;
+                const lineup = `${alreadyPlayed}${inPlay}${yetToPlay}`;
 
                 // Return summary.
                 return `${index + 1}|**${team.thpp.total.toFixed(2)}**|[${
