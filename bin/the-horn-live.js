@@ -106,7 +106,7 @@ function updateTHPP(thpp) {
                 awayTeam.thpp.alreadyPlayed =
                     game.awayScore.alreadyPlayed === undefined
                         ? 9 - (game.awayScore.yetToPlay || 0) - (game.awayScore.inPlay || 0)
-                        : 0;
+                        : game.awayScore.alreadyPlayed;
                 awayTeam.thpp.final = awayTeam.thpp.alreadyPlayed === 9;
                 const homeTeam = teams.find(team => team.id === game.home.id);
                 homeTeam.thpp.week16 = game.homeScore.score.value || 0;
@@ -116,7 +116,7 @@ function updateTHPP(thpp) {
                 homeTeam.thpp.alreadyPlayed =
                     game.homeScore.alreadyPlayed === undefined
                         ? 9 - (game.homeScore.yetToPlay || 0) - (game.homeScore.inPlay || 0)
-                        : 0;
+                        : game.homeScore.alreadyPlayed;
                 homeTeam.thpp.final = homeTeam.thpp.alreadyPlayed === 9;
 
                 // Cache opponent status.
