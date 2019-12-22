@@ -126,14 +126,15 @@ function updateTHPP(thpp) {
                 homeTeam.thpp.opponentFinal = awayTeam.thpp.final;
 
                 // Cache whether a team has lost.
+                // Normally we're verifying that both teams have final scores.
+                // However, as long as the target team is final and losing by at least 2,
+                // we can safely call that a loss.
                 awayTeam.thpp.lost =
-                    homeTeam.thpp.final &&
                     awayTeam.thpp.final &&
-                    awayTeam.thpp.week16 - homeTeam.thpp.week16 < 0;
+                    awayTeam.thpp.week16 - homeTeam.thpp.week16 < (homeTeam.thpp.final ? 0 : -2);
                 homeTeam.thpp.lost =
                     homeTeam.thpp.final &&
-                    awayTeam.thpp.final &&
-                    homeTeam.thpp.week16 - awayTeam.thpp.week16 < 0;
+                    homeTeam.thpp.week16 - awayTeam.thpp.week16 < (awayTeam.thpp.final ? 0 : -2);
 
                 // Re-compute THPP.
                 updateTHPP(awayTeam.thpp);
