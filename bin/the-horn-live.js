@@ -121,7 +121,7 @@ function updateTHPP(thpp) {
 
                 // Cache opponent status.
                 awayTeam.thpp.opponent16 = game.homeScore.score.value || 0;
-                homeTeam.thpp.opponentFinal = homeTeam.thpp.final;
+                awayTeam.thpp.opponentFinal = homeTeam.thpp.final;
                 homeTeam.thpp.opponent16 = game.awayScore.score.value || 0;
                 homeTeam.thpp.opponentFinal = awayTeam.thpp.final;
 
