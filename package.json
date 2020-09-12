@@ -19,7 +19,7 @@
         "date-fns": "^2.8.1",
         "date-fns-tz": "^1.0.8",
         "dotenv-defaults": "^1.0.3",
-        "node-fetch": "^2.6.0",
+        "node-fetch": "^2.6.1",
         "snoowrap": "^1.20.1"
     },
     "devDependencies": {
