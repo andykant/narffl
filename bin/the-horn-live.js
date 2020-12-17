@@ -226,6 +226,10 @@ function updateTHPP(thpp) {
 This is an official live computation of **The Horn Playoff Points**:  
 \`[.5 * (Regular Season Points Avg)] + (Week 15 Score) + (Week 16 Score) = Total Horn Playoff Points\`
 
+🔲 = player yet to play  
+🏈 = player currently playing  
+✅ = player finished playing OR team final score
+
 _Updated every five minutes during games._  
 _Last updated: ${now}_
 
