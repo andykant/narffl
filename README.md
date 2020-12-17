@@ -22,6 +22,9 @@ This is a collection of historical NarFFL data, both a summary of its format/lea
 -   **2014-2019**: Modern Horn, added Farm.  
     1392 teams (144 Premier, 288 Major, 576 Minor, 384 Farm)  
     No changes since, aside from how the Farm lottery works.
+-   **2020**: Expanded farm, pandemic.  
+    1584 teams (144 Premier, 288 Major, 576 Minor, 576 Farm)  
+    Temporarily added 2 IR slots for COVID-19.
 
 ## Data Availability
 
@@ -35,7 +38,8 @@ This is a collection of historical NarFFL data, both a summary of its format/lea
 -   **2016** ✅ (Fleaflicker)
 -   **2017** ✅ (Fleaflicker)
 -   **2018** ✅ (Fleaflicker)
--   **2019** ✅ (Fleaflicker, in progress)
+-   **2019** ✅ (Fleaflicker)
+-   **2020** ✅ (Fleaflicker, in progress)
 
 ## ELO Ratings
 
