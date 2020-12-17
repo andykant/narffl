@@ -19,6 +19,7 @@ const {
     REDDIT_CLIENT_ID,
     REDDIT_CLIENT_SECRET,
     REDDIT_REFRESH_TOKEN,
+    REDDIT_SUBREDDIT,
     REDDIT_THING_ID,
 } = process.env;
 
@@ -247,7 +248,7 @@ ${summaries.join('\r\n')}
                 console.log(`${Date.now()} Creating reddit post.`);
                 await r
                     .submitSelfpost({
-                        subredditName: 'NarFFL',
+                        subredditName: REDDIT_SUBREDDIT,
                         title: `The Hunt for the Horn LIVE (${SEASON}) - Week ${WEEK}`,
                         text: markdown,
                     })
