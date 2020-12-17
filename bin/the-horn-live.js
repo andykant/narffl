@@ -18,8 +18,7 @@ const {
     TIMEZONE,
     REDDIT_CLIENT_ID,
     REDDIT_CLIENT_SECRET,
-    REDDIT_USERNAME,
-    REDDIT_PASSWORD,
+    REDDIT_REFRESH_TOKEN,
     REDDIT_THING_ID,
 } = process.env;
 
@@ -223,31 +222,45 @@ function updateTHPP(thpp) {
 
         // Generate markdown.
         const markdown = `
-            ## The Horn Playoffs **LIVE WEEK ${WEEK}!**
-            
-            This is an official live computation of **The Horn Playoff Points**:  
-            \`[.5 * (Regular Season Points Avg)] + (Week 15 Score) + (Week 16 Score) = Total Horn Playoff Points\`
-            
-            _Updated every five minutes during games._  
-            _Last updated: ${now}_
-            
-            Rank|THPP|Team|League|Lineup|Average|Week15|Week16|Opponent
-            :--|:--|:--|:-:|:-:|:-:|:-:|:-:|:-:
-            ${summaries.join('\r\n')}
+This is an official live computation of **The Horn Playoff Points**:  
+\`[.5 * (Regular Season Points Avg)] + (Week 15 Score) + (Week 16 Score) = Total Horn Playoff Points\`
+
+_Updated every five minutes during games._  
+_Last updated: ${now}_
+
+Rank|THPP|Team|League|Lineup|Average|Week15|Week16|Opponent
+:--|:--|:--|:-:|:-:|:-:|:-:|:-:|:-:
+${summaries.join('\r\n')}
         `;
 
+        // Create reddit API instance.
+        const r = new snoowrap({
+            userAgent: 'script',
+            clientId: REDDIT_CLIENT_ID,
+            clientSecret: REDDIT_CLIENT_SECRET,
+            refreshToken: REDDIT_REFRESH_TOKEN,
+        });
+
         switch (action) {
+            // Create a dummy post.
+            case 'create':
+                console.log(`${Date.now()} Creating reddit post.`);
+                await r
+                    .submitSelfpost({
+                        subredditName: 'NarFFL',
+                        title: `The Hunt for the Horn LIVE (${SEASON}) - Week ${WEEK}`,
+                        text: markdown,
+                    })
+                    .then(console.log);
+                process.exit(0);
+                break;
             // Update reddit post.
             case 'update':
-                console.log(`${Date.now()} Updating reddit.`);
-                const r = new snoowrap({
-                    userAgent: 'script',
-                    clientId: REDDIT_CLIENT_ID,
-                    clientSecret: REDDIT_CLIENT_SECRET,
-                    username: REDDIT_USERNAME,
-                    password: REDDIT_PASSWORD,
-                });
-                await r.getSubmission(REDDIT_THING_ID).edit(markdown);
+                console.log(`${Date.now()} Updating reddit post.`);
+                await r
+                    .getSubmission(REDDIT_THING_ID)
+                    .edit(markdown)
+                    .then(console.log);
                 console.log(`${Date.now()} Finished.`);
                 break;
             // Dry run, just show the markdown result.
