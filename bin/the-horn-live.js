@@ -4,12 +4,17 @@ import cron from 'cron';
 import snoowrap from 'snoowrap';
 import dateTZ from 'date-fns-tz';
 import dotenv from 'dotenv-defaults';
+import yargs from 'yargs';
 dotenv.config();
+
+// Grab the processing action.
+const action = yargs.parse()._[0];
 
 const {CronJob} = cron;
 const {zonedTimeToUtc, utcToZonedTime, format} = dateTZ;
 const {
     SEASON,
+    WEEK,
     TIMEZONE,
     REDDIT_CLIENT_ID,
     REDDIT_CLIENT_SECRET,
@@ -42,103 +47,126 @@ function updateTHPP(thpp) {
         id: parseInt(url.match(/leagues\/(\d+)/)[1], 10),
     }));
 
-    // Retrieve championship teams.
+    // Retrieve Horn teams.
     const teams = [];
     await Promise.all(
         leagues.map(async ({id, name}) => {
-            const scoreboard = await fetchScoreboard({id, week: 16});
-            const game = scoreboard.games.find(game => game.isChampionshipGame);
-
-            // Append metadata.
-            game.away.league = name;
-            game.away.teamUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/teams/${game.away.id}`;
-            game.home.league = name;
-            game.home.teamUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/teams/${game.home.id}`;
-            game.away.leagueUrl = game.home.leagueUrl = `https://www.fleaflicker.com/nfl/leagues/${id}`;
-            game.away.scoreUrl = game.home.scoreUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/scores/${game.id}`;
-
-            teams.push(game.away);
-            teams.push(game.home);
-        })
-    );
-
-    // Retrieve regular season average and week 15 scores.
-    await Promise.all(
-        leagues.map(async ({id}) => {
-            // Grab the games with championship teams.
-            const scoreboard = await fetchScoreboard({id, week: 15});
+            const scoreboard = await fetchScoreboard({id, week: WEEK});
             const games = scoreboard.games.filter(game =>
-                teams.find(team => team.id === game.away.id || team.id === game.home.id)
+                WEEK === '16' ? game.isChampionshipGame : game.isPlayoffs
             );
 
-            // Cache average and week 15 scores.
             games.forEach(game => {
-                const side = teams.find(team => team.id === game.home.id) ? 'home' : 'away';
-                const team = teams.find(team => team.id === game[side].id);
+                // Append metadata.
+                game.away.league = name;
+                game.away.teamUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/teams/${game.away.id}`;
+                game.home.league = name;
+                game.home.teamUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/teams/${game.home.id}`;
+                game.away.leagueUrl = game.home.leagueUrl = `https://www.fleaflicker.com/nfl/leagues/${id}`;
+                game.away.scoreUrl = game.home.scoreUrl = `https://www.fleaflicker.com/nfl/leagues/${id}/scores/${game.id}`;
 
-                // Compute THPP values.
-                team.thpp = {
-                    average: Number(((team.pointsFor.value / 13) * 0.5).toFixed(2)),
-                    week15: game[`${side}Score`].score.value,
-                    week16: 0,
-                };
-                updateTHPP(team.thpp);
+                teams.push(game.away);
+                teams.push(game.home);
             });
         })
     );
 
-    // Create reddit updater.
-    async function updateRedditPost() {
-        // Retrieve Week 16 statuses.
-        console.log(`${Date.now()} Retrieving week 16 stats.`);
+    // Populate default THPP.
+    teams.forEach(team => {
+        team.thpp = {
+            average: Number(((team.pointsFor.value / 13) * 0.5).toFixed(2)),
+            week15: 0,
+            week16: 0,
+        };
+        updateTHPP(team.thpp);
+    });
+
+    // Retrieve regular season average and week 15 scores.
+    if (WEEK === '16') {
         await Promise.all(
             leagues.map(async ({id}) => {
-                // Grab the games with championship teams.
-                const scoreboard = await fetchScoreboard({id, week: 16});
-                const game = scoreboard.games.find(game => game.isChampionshipGame);
+                // Grab the games with Horn teams.
+                const scoreboard = await fetchScoreboard({id, week: 15});
+                const games = scoreboard.games.filter(game =>
+                    teams.find(team => team.id === game.away.id || team.id === game.home.id)
+                );
 
-                // Cache week 16 status.
-                const awayTeam = teams.find(team => team.id === game.away.id);
-                awayTeam.thpp.week16 = game.awayScore.score.value || 0;
-                awayTeam.thpp.yetToPlay = game.awayScore.yetToPlay || 0;
-                awayTeam.thpp.yetToPlayPositions = (game.awayScore.yetToPlayPositions || []).sort();
-                awayTeam.thpp.inPlay = game.awayScore.inPlay || 0;
-                awayTeam.thpp.alreadyPlayed =
-                    game.awayScore.alreadyPlayed === undefined
-                        ? 9 - (game.awayScore.yetToPlay || 0) - (game.awayScore.inPlay || 0)
-                        : game.awayScore.alreadyPlayed;
-                awayTeam.thpp.final = awayTeam.thpp.alreadyPlayed === 9;
-                const homeTeam = teams.find(team => team.id === game.home.id);
-                homeTeam.thpp.week16 = game.homeScore.score.value || 0;
-                homeTeam.thpp.yetToPlay = game.homeScore.yetToPlay || 0;
-                homeTeam.thpp.yetToPlayPositions = (game.homeScore.yetToPlayPositions || []).sort();
-                homeTeam.thpp.inPlay = game.homeScore.inPlay || 0;
-                homeTeam.thpp.alreadyPlayed =
-                    game.homeScore.alreadyPlayed === undefined
-                        ? 9 - (game.homeScore.yetToPlay || 0) - (game.homeScore.inPlay || 0)
-                        : game.homeScore.alreadyPlayed;
-                homeTeam.thpp.final = homeTeam.thpp.alreadyPlayed === 9;
+                // Cache average and week 15 scores.
+                games.forEach(game => {
+                    const side = teams.find(team => team.id === game.home.id) ? 'home' : 'away';
+                    const team = teams.find(team => team.id === game[side].id);
 
-                // Cache opponent status.
-                awayTeam.thpp.opponent16 = game.homeScore.score.value || 0;
-                awayTeam.thpp.opponentFinal = homeTeam.thpp.final;
-                homeTeam.thpp.opponent16 = game.awayScore.score.value || 0;
-                homeTeam.thpp.opponentFinal = awayTeam.thpp.final;
+                    // Compute THPP values.
+                    team.thpp.week15 = game[`${side}Score`].score.value || 0;
+                    updateTHPP(team.thpp);
+                });
+            })
+        );
+    }
 
-                // Cache whether a team has lost.
-                // Normally we're verifying that both teams have final scores.
-                // However, as long as the target team is final and losing by at least 10,
-                // we can safely call that a loss.
-                awayTeam.thpp.lost =
-                    awayTeam.thpp.final &&
-                    awayTeam.thpp.week16 - homeTeam.thpp.week16 < (homeTeam.thpp.final ? 0 : -10);
-                homeTeam.thpp.lost =
-                    homeTeam.thpp.final &&
-                    homeTeam.thpp.week16 - awayTeam.thpp.week16 < (awayTeam.thpp.final ? 0 : -10);
+    // Create reddit updater.
+    async function updateRedditPost() {
+        // Retrieve requested week (15 or 16) statuses.
+        console.log(`${Date.now()} Retrieving week ${WEEK} stats.`);
+        await Promise.all(
+            leagues.map(async ({id}) => {
+                // Grab the games with Horn teams.
+                const scoreboard = await fetchScoreboard({id, week: WEEK});
+                const games = scoreboard.games.filter(game =>
+                    WEEK === '16' ? game.isChampionshipGame : game.isPlayoffs
+                );
 
-                // Re-compute THPP.
-                updateTHPP(awayTeam.thpp);
-                updateTHPP(homeTeam.thpp);
+                games.forEach(game => {
+                    // Cache week status.
+                    const awayTeam = teams.find(team => team.id === game.away.id);
+                    if (!awayTeam) console.log(`${game.id} ${game.away.id}`);
+                    awayTeam.thpp[`week${WEEK}`] = game.awayScore.score.value || 0;
+                    awayTeam.thpp.yetToPlay = game.awayScore.yetToPlay || 0;
+                    awayTeam.thpp.yetToPlayPositions = (
+                        game.awayScore.yetToPlayPositions || []
+                    ).sort();
+                    awayTeam.thpp.inPlay = game.awayScore.inPlay || 0;
+                    awayTeam.thpp.alreadyPlayed =
+                        game.awayScore.alreadyPlayed === undefined
+                            ? 9 - (game.awayScore.yetToPlay || 0) - (game.awayScore.inPlay || 0)
+                            : game.awayScore.alreadyPlayed;
+                    awayTeam.thpp.final = awayTeam.thpp.alreadyPlayed === 9;
+                    const homeTeam = teams.find(team => team.id === game.home.id);
+                    homeTeam.thpp[`week${WEEK}`] = game.homeScore.score.value || 0;
+                    homeTeam.thpp.yetToPlay = game.homeScore.yetToPlay || 0;
+                    homeTeam.thpp.yetToPlayPositions = (
+                        game.homeScore.yetToPlayPositions || []
+                    ).sort();
+                    homeTeam.thpp.inPlay = game.homeScore.inPlay || 0;
+                    homeTeam.thpp.alreadyPlayed =
+                        game.homeScore.alreadyPlayed === undefined
+                            ? 9 - (game.homeScore.yetToPlay || 0) - (game.homeScore.inPlay || 0)
+                            : game.homeScore.alreadyPlayed;
+                    homeTeam.thpp.final = homeTeam.thpp.alreadyPlayed === 9;
+
+                    // Cache opponent status.
+                    awayTeam.thpp[`opponent${WEEK}`] = game.homeScore.score.value || 0;
+                    awayTeam.thpp.opponentFinal = homeTeam.thpp.final;
+                    homeTeam.thpp[`opponent${WEEK}`] = game.awayScore.score.value || 0;
+                    homeTeam.thpp.opponentFinal = awayTeam.thpp.final;
+
+                    // Cache whether a team has lost.
+                    // Normally we're verifying that both teams have final scores.
+                    // However, as long as the target team is final and losing by at least 10,
+                    // we can safely call that a loss.
+                    awayTeam.thpp.lost =
+                        awayTeam.thpp.final &&
+                        awayTeam.thpp[`week${WEEK}`] - homeTeam.thpp[`week${WEEK}`] <
+                            (homeTeam.thpp.final ? 0 : -10);
+                    homeTeam.thpp.lost =
+                        homeTeam.thpp.final &&
+                        homeTeam.thpp[`week${WEEK}`] - awayTeam.thpp[`week${WEEK}`] <
+                            (awayTeam.thpp.final ? 0 : -10);
+
+                    // Re-compute THPP.
+                    updateTHPP(awayTeam.thpp);
+                    updateTHPP(homeTeam.thpp);
+                });
             })
         );
 
@@ -166,13 +194,23 @@ function updateTHPP(thpp) {
                 const lineup = `${alreadyPlayed}${inPlay}${yetToPlay}`;
 
                 // Return summary.
+                const week15 =
+                    WEEK === '15'
+                        ? `[${team.thpp.week15.toFixed(2)}${team.thpp.final ? '✅' : ''}](${
+                              team.scoreUrl
+                          })`
+                        : team.thpp.week15.toFixed(2);
+                const week16 =
+                    WEEK === '16'
+                        ? `[${team.thpp.week16.toFixed(2)}${team.thpp.final ? '✅' : ''}](${
+                              team.scoreUrl
+                          })`
+                        : team.thpp.week16.toFixed(2);
                 return `${index + 1}|**${team.thpp.total.toFixed(2)}**|[${
                     team.thpp.lost ? `~~${team.name}~~` : team.name
                 }](${team.teamUrl})|[${team.league}](${team.leagueUrl})|${lineup}|${(
                     2 * team.thpp.average
-                ).toFixed(2)}|${team.thpp.week15.toFixed(2)}|[${team.thpp.week16.toFixed(2)}${
-                    team.thpp.final ? '✅' : ''
-                }](${team.scoreUrl})|${team.thpp.opponent16.toFixed(2)}${
+                ).toFixed(2)}|${week15}|${week16}|${team.thpp[`opponent${WEEK}`].toFixed(2)}${
                     team.thpp.opponentFinal ? '✅' : ''
                 }`;
             });
@@ -183,31 +221,42 @@ function updateTHPP(thpp) {
             timeZone: TIMEZONE,
         });
 
-        // Update reddit post.
-        console.log(`${Date.now()} Updating reddit.`);
-        const r = new snoowrap({
-            userAgent: 'script',
-            clientId: REDDIT_CLIENT_ID,
-            clientSecret: REDDIT_CLIENT_SECRET,
-            username: REDDIT_USERNAME,
-            password: REDDIT_PASSWORD,
-        });
-        await r.getSubmission(REDDIT_THING_ID).edit(`
-## The Horn Playoffs **LIVE!**
+        // Generate markdown.
+        const markdown = `
+            ## The Horn Playoffs **LIVE WEEK ${WEEK}!**
+            
+            This is an official live computation of **The Horn Playoff Points**:  
+            \`[.5 * (Regular Season Points Avg)] + (Week 15 Score) + (Week 16 Score) = Total Horn Playoff Points\`
+            
+            _Updated every five minutes during games._  
+            _Last updated: ${now}_
+            
+            Rank|THPP|Team|League|Lineup|Average|Week15|Week16|Opponent
+            :--|:--|:--|:-:|:-:|:-:|:-:|:-:|:-:
+            ${summaries.join('\r\n')}
+        `;
 
-This is an unofficial live computation of **The Horn Playoff Points**:  
-\`[.5 * (Regular Season Points Avg)] + (Week 15 Score) + (Week 16 Score) = Total Horn Playoff Points\`
-
-Hopefully this works correctly, as I wasn't able to test it against games in progress.
-
-_Updated every five minutes._  
-_Last updated: ${now}_
-
-Rank|THPP|Team|League|Lineup|Average|Week15|Week16|Opponent
-:--|:--|:--|:-:|:-:|:-:|:-:|:-:|:-:
-${summaries.join('\r\n')}
-        `);
-        console.log(`${Date.now()} Finished.`);
+        switch (action) {
+            // Update reddit post.
+            case 'update':
+                console.log(`${Date.now()} Updating reddit.`);
+                const r = new snoowrap({
+                    userAgent: 'script',
+                    clientId: REDDIT_CLIENT_ID,
+                    clientSecret: REDDIT_CLIENT_SECRET,
+                    username: REDDIT_USERNAME,
+                    password: REDDIT_PASSWORD,
+                });
+                await r.getSubmission(REDDIT_THING_ID).edit(markdown);
+                console.log(`${Date.now()} Finished.`);
+                break;
+            // Dry run, just show the markdown result.
+            case 'dry-run':
+            default:
+                console.log(markdown);
+                process.exit(0);
+                break;
+        }
     }
 
     // Run cron job.
