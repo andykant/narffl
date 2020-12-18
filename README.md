@@ -11,7 +11,7 @@ This is a collection of historical NarFFL data, both a summary of its format/lea
 -   **2011**: Premier premieres in its current structure.  
     192 teams (144 Premier, 48 Alt).  
     Gridiron challenge used for Horn.
--   **2012**: NarFFL grows a little too fast, lots of abandoned alt teams.
+-   **2012**: NarFFL grows a little too fast, lots of abandoned alt teams.  
     1488 teams (144 Premier, 1344 Alt).  
     Gridiron challenge used for Horn and promotion.
 -   **2013**: Modern Premier/Majors/Minors structure, and shrinking for stability.  
