@@ -34,7 +34,7 @@ async function fetchScoreboard({id, week}) {
 
 // Add THPP component values.
 function updateTHPP(thpp) {
-    thpp.total = Number((thpp.average + thpp.week15 + thpp.week16).toFixed(2));
+    thpp.total = Number((thpp.average + thpp.week16 + thpp.week17).toFixed(2));
     return thpp.total;
 }
 
@@ -53,7 +53,7 @@ function updateTHPP(thpp) {
         leagues.map(async ({id, name}) => {
             const scoreboard = await fetchScoreboard({id, week: WEEK});
             const games = scoreboard.games.filter(game =>
-                WEEK === '16' ? game.isChampionshipGame : game.isPlayoffs
+                WEEK === '17' ? game.isChampionshipGame : game.isPlayoffs
             );
 
             games.forEach(game => {
@@ -75,14 +75,14 @@ function updateTHPP(thpp) {
     teams.forEach(team => {
         team.thpp = {
             average: Number(((team.pointsFor.value / 13) * 0.5).toFixed(2)),
-            week15: 0,
             week16: 0,
+            week17: 0,
         };
         updateTHPP(team.thpp);
     });
 
     // Retrieve regular season average and week 15 scores.
-    if (WEEK === '16') {
+    if (WEEK === '17') {
         await Promise.all(
             leagues.map(async ({id}) => {
                 // Grab the games with Horn teams.
@@ -97,7 +97,7 @@ function updateTHPP(thpp) {
                     const team = teams.find(team => team.id === game[side].id);
 
                     // Compute THPP values.
-                    team.thpp.week15 = game[`${side}Score`].score.value || 0;
+                    team.thpp.week16 = game[`${side}Score`].score.value || 0;
                     updateTHPP(team.thpp);
                 });
             })
@@ -106,14 +106,14 @@ function updateTHPP(thpp) {
 
     // Create reddit updater.
     async function updateRedditPost() {
-        // Retrieve requested week (15 or 16) statuses.
+        // Retrieve requested week (16 or 17) statuses.
         console.log(`${Date.now()} Retrieving week ${WEEK} stats.`);
         await Promise.all(
             leagues.map(async ({id}) => {
                 // Grab the games with Horn teams.
                 const scoreboard = await fetchScoreboard({id, week: WEEK});
                 const games = scoreboard.games.filter(game =>
-                    WEEK === '16' ? game.isChampionshipGame : game.isPlayoffs
+                    WEEK === '17' ? game.isChampionshipGame : game.isPlayoffs
                 );
 
                 games.forEach(game => {
@@ -194,23 +194,23 @@ function updateTHPP(thpp) {
                 const lineup = `${alreadyPlayed}${inPlay}${yetToPlay}`;
 
                 // Return summary.
-                const week15 =
-                    WEEK === '15'
-                        ? `[${team.thpp.week15.toFixed(2)}${team.thpp.final ? '✅' : ''}](${
-                              team.scoreUrl
-                          })`
-                        : team.thpp.week15.toFixed(2);
                 const week16 =
                     WEEK === '16'
                         ? `[${team.thpp.week16.toFixed(2)}${team.thpp.final ? '✅' : ''}](${
                               team.scoreUrl
                           })`
                         : team.thpp.week16.toFixed(2);
+                const week17 =
+                    WEEK === '17'
+                        ? `[${team.thpp.week17.toFixed(2)}${team.thpp.final ? '✅' : ''}](${
+                              team.scoreUrl
+                          })`
+                        : team.thpp.week17.toFixed(2);
                 return `${index + 1}|**${team.thpp.total.toFixed(2)}**|[${
                     team.thpp.lost ? `~~${team.name}~~` : team.name
                 }](${team.teamUrl})|[${team.league}](${team.leagueUrl})|${lineup}|${(
                     2 * team.thpp.average
-                ).toFixed(2)}|${week15}|${week16}|${team.thpp[`opponent${WEEK}`].toFixed(2)}${
+                ).toFixed(2)}|${week16}|${week17}|${team.thpp[`opponent${WEEK}`].toFixed(2)}${
                     team.thpp.opponentFinal ? '✅' : ''
                 }`;
             });
@@ -224,7 +224,7 @@ function updateTHPP(thpp) {
         // Generate markdown.
         const markdown = `
 This is an official live computation of **The Horn Playoff Points**:  
-\`[.5 * (Regular Season Points Avg)] + (Week 15 Score) + (Week 16 Score) = Total Horn Playoff Points\`
+\`[.5 * (Regular Season Points Avg)] + (Week 16 Score) + (Week 17 Score) = Total Horn Playoff Points\`
 
 🔲 = player yet to play  
 🏈 = player currently playing  
@@ -233,7 +233,7 @@ This is an official live computation of **The Horn Playoff Points**:
 _Updated every five minutes during games._  
 _Last updated: ${now}_
 
-Rank|THPP|Team|League|Lineup|Average|Week15|Week16|Opponent
+Rank|THPP|Team|League|Lineup|Average|Week16|Week17|Opponent
 :--|:--|:--|:-:|:-:|:-:|:-:|:-:|:-:
 ${summaries.join('\r\n')}
         `;
