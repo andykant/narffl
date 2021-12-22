@@ -74,7 +74,7 @@ function updateTHPP(thpp) {
     // Populate default THPP.
     teams.forEach(team => {
         team.thpp = {
-            average: Number(((team.pointsFor.value / 13) * 0.5).toFixed(2)),
+            average: Number(((team.pointsFor.value / 14) * 0.5).toFixed(2)),
             week16: 0,
             week17: 0,
         };
