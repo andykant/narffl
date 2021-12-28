@@ -81,17 +81,17 @@ function updateTHPP(thpp) {
         updateTHPP(team.thpp);
     });
 
-    // Retrieve regular season average and week 15 scores.
+    // Retrieve regular season average and week 16 scores.
     if (WEEK === '17') {
         await Promise.all(
             leagues.map(async ({id}) => {
                 // Grab the games with Horn teams.
-                const scoreboard = await fetchScoreboard({id, week: 15});
+                const scoreboard = await fetchScoreboard({id, week: 16});
                 const games = scoreboard.games.filter(game =>
                     teams.find(team => team.id === game.away.id || team.id === game.home.id)
                 );
 
-                // Cache average and week 15 scores.
+                // Cache average and week 16 scores.
                 games.forEach(game => {
                     const side = teams.find(team => team.id === game.home.id) ? 'home' : 'away';
                     const team = teams.find(team => team.id === game[side].id);
