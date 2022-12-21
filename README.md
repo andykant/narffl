@@ -39,7 +39,9 @@ This is a collection of historical NarFFL data, both a summary of its format/lea
 -   **2017** ✅ (Fleaflicker)
 -   **2018** ✅ (Fleaflicker)
 -   **2019** ✅ (Fleaflicker)
--   **2020** ✅ (Fleaflicker, in progress)
+-   **2020** ✅ (Fleaflicker)
+-   **2021** ✅ (Fleaflicker)
+-   **2022** ✅ (Fleaflicker, in progress)
 
 ## ELO Ratings
 
