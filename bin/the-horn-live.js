@@ -7,6 +7,19 @@ import dotenv from 'dotenv-defaults';
 import yargs from 'yargs';
 dotenv.config();
 
+// PRE-REQUISITES:
+// - Make sure to update `.env`
+// - Generate a new refresh token using `npx reddit-oauth-helper`
+//
+// USAGE:
+// $ yarn the-horn-live dry-run
+// $ yarn the-horn-live create
+// $ yarn the-horn-live update
+//
+// REFERENCES:
+// - Reddit OAuth https://www.reddit.com/prefs/apps
+// - snoowrap https://not-an-aardvark.github.io/snoowrap/ https://github.com/not-an-aardvark/reddit-oauth-helper
+
 // Grab the processing action.
 const action = yargs.parse()._[0];
 
@@ -265,6 +278,7 @@ ${summaries.join('\r\n')}
                 await r
                     .getSubmission(REDDIT_THING_ID)
                     .edit(markdown)
+                    .catch(console.error)
                     .then(console.log);
                 console.log(`${Date.now()} Finished.`);
                 break;

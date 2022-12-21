@@ -551,7 +551,7 @@ request-promise-core@1.1.4:
   dependencies:
     lodash "^4.17.19"
 
-request-promise@^4.2.2:
+request-promise@^4.2.6:
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/request-promise/-/request-promise-4.2.6.tgz#7e7e5b9578630e6f598e3813c0f8eb342a27f0a2"
   integrity sha512-HCHI3DJJUakkOr8fNoCc73E5nU5bqITjOYFMDrKHYOXWXrgD/SBaC7LjwuPymUprRyuF06UK7hd/lMHkmUXglQ==
@@ -561,7 +561,7 @@ request-promise@^4.2.2:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.87.0:
+request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -622,16 +622,16 @@ set-blocking@^2.0.0:
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
   integrity sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
 
-snoowrap@^1.20.1:
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/snoowrap/-/snoowrap-1.21.0.tgz#559d30a11152860d3a4322f113963308c62df969"
-  integrity sha512-vSQlfm0ikek6mezBhTGtYw0vk4hdpgIrtm2o4kZPDzg0HVs4b/Kw7COEfD8TujQP0zzp9EGSwa1rkHufBrwkEw==
+snoowrap@^1.23.0:
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/snoowrap/-/snoowrap-1.23.0.tgz#30f02514ee533b7e305df083ad5bb0741549e268"
+  integrity sha512-8FIGWr20Gc+d/C3NRrNPp5VQFNb+eGaQyvIkM5KUL71pYpRM231fkRdLNydMrdtLNRDrTZeZApHHCb8Uk/QuTQ==
   dependencies:
     bluebird "^3.5.5"
     lodash "^4.17.15"
     promise-chains "^0.3.11"
-    request "^2.87.0"
-    request-promise "^4.2.2"
+    request "^2.88.2"
+    request-promise "^4.2.6"
     ws "^3.3.1"
 
 sshpk@^1.7.0:
