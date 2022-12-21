@@ -87,7 +87,8 @@ function updateTHPP(thpp) {
     // Populate default THPP.
     teams.forEach(team => {
         team.thpp = {
-            average: Number(((team.pointsFor.value / 14) * 0.5).toFixed(2)),
+            average: Number((Math.round((team.pointsFor.value / 14) * 0.5 * 100) / 100).toFixed(2)),
+            averageFull: Number((Math.round((team.pointsFor.value / 14) * 100) / 100).toFixed(2)),
             week16: 0,
             week17: 0,
         };
@@ -221,9 +222,9 @@ function updateTHPP(thpp) {
                         : team.thpp.week17.toFixed(2);
                 return `${index + 1}|**${team.thpp.total.toFixed(2)}**|[${
                     team.thpp.lost ? `~~${team.name}~~` : team.name
-                }](${team.teamUrl})|[${team.league}](${team.leagueUrl})|${lineup}|${(
-                    2 * team.thpp.average
-                ).toFixed(2)}|${week16}|${week17}|${team.thpp[`opponent${WEEK}`].toFixed(2)}${
+                }](${team.teamUrl})|[${team.league}](${team.leagueUrl})|${lineup}|${
+                    team.thpp.averageFull
+                }|${week16}|${week17}|${team.thpp[`opponent${WEEK}`].toFixed(2)}${
                     team.thpp.opponentFinal ? '✅' : ''
                 }`;
             });
